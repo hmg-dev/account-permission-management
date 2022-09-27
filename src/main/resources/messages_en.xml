@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="request.start.headline">Request Account Permissions</entry>
+	<entry key="request.start.choose.headline">Hello, {0} - for whom would you like to request permissions?</entry>
+	<entry key="request.start.choose.myself">for myself</entry>
+	<entry key="request.start.choose.other">for someone else</entry>
+	<entry key="request.start.choose.enterTargetUser">enter the eMail-address of the target-user</entry>
+	<entry key="request.start.choose.enterCancellationDate"><![CDATA[enter the <b>cancellation-date</b> of the requested permission (leave empty for 'never expire')]]></entry>
+	<entry key="request.edit.headline">Edit Permissions Request</entry>
+	<entry key="request.edit.button">Edit</entry>
+	<entry key="request.edit.choose.headline">Hello, {0} - for whom is the permission-request supposed to be?</entry>
+	<entry key="request.edit.error.requestid.invalid">Specified ID is invalid - no such request!</entry>
+	
+	<entry key="request.tools.choose.headline">Available Tools and Products</entry>
+	<entry key="request.tools.choose.disclaimer">If a tool is missing in this list, we don't have the ownership and can't manage user-permissions for it!</entry>
+	<entry key="request.subcategory.headline">Permissions inside the Tools</entry>
+	<entry key="request.subcategory.entry.custom">Other / Comment</entry>
+	<entry key="request.subcategory.mode.write">write</entry>
+	<entry key="request.subcategory.mode.read">read</entry>
+	<entry key="request.subcategory.mode.admin">admin</entry>
+	<entry key="request.subcategory.mode.stakeholder">stakeholder</entry>
+	<entry key="request.button">submit request</entry>
+	<entry key="request.error.mail.invalid">The specified eMail-address is invalid!</entry>
+	<entry key="request.error.open.request.exists">There is already an open request for this user!</entry>
+	<entry key="request.success.created">The permission-request for the user {0} has been created. You will be notified, as soon as there is an update to it.</entry>
+	<entry key="request.success.edited">The permission-request for the user {0} has been updated. You will be notified, as soon as there is an update to it.</entry>
+
+	<entry key="requests.my.headline">My Permission Requests</entry>
+	<entry key="requests.my.norequests">You have not yet issued any permission-request.</entry>
+	<entry key="requests.my.status">Status</entry>
+	<entry key="requests.my.comment">Remark</entry>
+
+	<entry key="permissions.my.headline">My Permissions</entry>
+	<entry key="permissions.my.no_permissions">Currently you have no permissions granted.</entry>
+
+	<entry key="common.page_bar.pages">Pages ({0}): </entry>
+	<entry key="common.page_bar.first">first</entry>
+	<entry key="common.page_bar.last">last</entry>
+	
+	<entry key="menu.entry.admin_ui">Admin UI</entry>
+	<entry key="menu.entry.back_to_page">Back to Request-Page</entry>
+	<entry key="menu.entry.auditlog">AuditLog</entry>
+	<entry key="menu.entry.myrequests">My Requests</entry>
+	<entry key="menu.entry.mypermissions">My Permissions</entry>
+	<entry key="menu.entry.user_permissions">User Permissions</entry>
+	<entry key="menu.entry.expiring_permissions">Expiring Permissions</entry>
+	
+	<entry key="admin.start.headline">Manage Account Permissions</entry>
+	<entry key="admin.start.open_requests.headline">Open permission-requests</entry>
+	<entry key="admin.start.open_requests.norequests">Currently there are no open permission-requests. Relax!</entry>
+	<entry key="admin.start.open_requests.base_data.from">Requested FROM</entry>
+	<entry key="admin.start.open_requests.base_data.for">Requested FOR</entry>
+	<entry key="admin.start.open_requests.base_data.date">Requested AT</entry>
+	<entry key="admin.start.open_requests.base_data.validTo">Valid TO</entry>
+	<entry key="admin.start.open_requests.actions.accept">Accept</entry>
+	<entry key="admin.start.open_requests.actions.reject">Reject</entry>
+	<entry key="admin.start.open_requests.actions.reject.confirm_title">Confirm rejection and state a reason</entry>
+	<entry key="admin.start.open_requests.actions.reject.confirm_text"><![CDATA[
+		Deny Permissions for User <b>{0}</b>.<br/> Please enter the reason for the rejection of the request.
+	]]></entry>
+	<entry key="admin.start.open_requests.actions.accept.confirm_title">Confirm accept permissions</entry>
+	<entry key="admin.start.open_requests.actions.accept.confirm_text"><![CDATA[
+		Make sure, that all permissions for User <b>{0}</b> have been configured accordingly.<br/>
+		There is no automation yet, so you shouldn't configure it after the fact.
+	]]></entry>
+	<entry key="admin.start.open_requests.category_comment">Comment</entry>
+
+	<entry key="admin.request.edit.headline">Edit Permissions Request for {0}</entry>
+	<entry key="admin.request.edit.choose.headline">Whats the target-user for the requested permissions?</entry>
+	<entry key="admin.request.edit.choose.requester">the requesting user</entry>
+	<entry key="admin.request.edit.choose.other">someone else</entry>
+	<entry key="admin.request.edit.success">The permission-request for the user {0} has been updated successfully.</entry>
+	
+	<entry key="admin.auditlog.headline">Audit Log</entry>
+	<entry key="admin.auditlog.noentries">No audit-log entries yet.</entry>
+	<entry key="admin.auditlog.date">Date</entry>
+	<entry key="admin.auditlog.action">Action</entry>
+	<entry key="admin.auditlog.user">User</entry>
+	<entry key="admin.auditlog.target_user">Target-User</entry>
+	<entry key="admin.auditlog.description">Description</entry>
+	<entry key="admin.auditlog.remark">Remark</entry>
+
+	<entry key="admin.user_permissions.headline">User Permissions</entry>
+	<entry key="admin.user_permissions.noentries">No user permissions granted yet.</entry>
+	<entry key="admin.user_permissions.username">Username</entry>
+	<entry key="admin.user_permissions.usermail">eMail</entry>
+	<entry key="admin.user_permissions.creationdate">Created</entry>
+	<entry key="admin.user_permissions.cancellation_date">Valid To</entry>
+	<entry key="admin.user_permissions.category_created">Created</entry>
+	<entry key="admin.user_permissions.category_updated">Updated</entry>
+	<entry key="admin.user_permissions.category_validto">Valid to</entry>
+	<entry key="admin.user_permissions.productcount">Products</entry>
+	<entry key="admin.user_permissions.categorycount">Categories</entry>
+
+	<entry key="admin.user_permissions.revoke">Revoke User Permissions</entry>
+	<entry key="admin.user_permissions.revoke.confirm_title">Confirm revokation of User Permissions</entry>
+	<entry key="admin.user_permissions.revoke.confirm_text"><![CDATA[
+		Make sure, that all listed permissions for User <b>{0}</b> have been disabled!<br/>
+		Pressing this button will NOT do it for you! Its just for documentation purposes.
+	]]></entry>
+	<entry key="admin.user_permissions.revoke.error">Failed to revoke user-permissions for {0}. Check log-file for details!</entry>
+	<entry key="admin.user_permissions.revoke.success">Successfully revoked user-permissions for {0}.</entry>
+	
+	<entry key="admin.expiring_permissions.headline">Permissions expiring in the next {0} days</entry>
+	<entry key="admin.expiring_permissions.noentries">No expiring permissions in the specified period</entry>
+	<entry key="admin.expiring_permissions.usermail">User eMail</entry>
+	<entry key="admin.expiring_permissions.product">Product</entry>
+	<entry key="admin.expiring_permissions.validto">Valid to</entry>
+	
+	<entry key="admin.reject.processing_error">Unable to reject request! Error was: {0}</entry>
+	<entry key="admin.reject.success">Successfully rejected permissions-request!</entry>
+
+	<entry key="admin.accept.processing_error">Unable to accept request! Error was: {0}</entry>
+	<entry key="admin.accept.success">Successfully accepted permissions-request!</entry>
+
+	<entry key="notification.request.created.subject">Received new Permission-Request for {0}</entry>
+	<entry key="notification.request.created.text">
+A new permission-request was issued by {0} for user {1}.
+Got to https://_REPLACEME_/admin to check the details!
+
+You will not receive another notification!
+	</entry>
+	<entry key="notification.request.rejected.subject">DENIED: Your Permission-Request for {0} has been rejected</entry>
+	<entry key="notification.request.rejected.text">
+You have recently create a request for permission for {0}.
+This request has been rejected!
+
+The reason given was: {1}
+	</entry>
+	<entry key="notification.request.accepted.subject">OK: Your Permission-Request for {0} has been accepted</entry>
+	<entry key="notification.request.accepted.text">
+You have recently create a request for permission for {0}.
+This request has been rejected!
+
+Congratulations!
+	</entry>
+	<entry key="notification.permissions.expire.subject">INFO: some user-permissions are about to expire</entry>
+	<entry key="notification.permissions.expire.text">
+The regular permission-check encountered the following users with expiring permissions:
+{0}
+
+Make sure, that their permissions are revoked on time!
+	</entry>
+
+	<!-- ADO Integration -->
+	<entry key="integration.ado.settings.headline">Azure DevOps Settings</entry>
+	<entry key="integration.ado.settings.projects">Organization Projects</entry>
+	<entry key="integration.ado.settings.sync">Sync Projects to Categories</entry>
+	<entry key="integration.ado.settings.sync_required">sync required</entry>
+	<entry key="integration.ado.settings.sync_ok">in sync</entry>
+
+	<entry key="menu.entry.ado_settings">ADO Settings</entry>
+	<entry key="integration.ado.settings.sync_failed">Sync of projects failed! Error was: </entry>
+	<entry key="integration.ado.settings.sync_success">{0} projects have been successfully synced</entry>
+	<!--/ ADO Integration -->
+	
+</properties>

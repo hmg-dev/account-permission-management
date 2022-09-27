@@ -1,0 +1,230 @@
+body {
+    font-family: sans;
+    margin: 2px;
+}
+
+h1 {
+    text-align: center;
+    font-family: sans;
+    color: #303a74;
+}
+
+h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
+
+hr {
+    width: 100%;
+}
+
+.open-permission-request {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #fff8de;
+    margin-bottom: 10px;
+    position: relative;
+}
+.no-requests {
+    justify-content: center;
+    font-weight: bold;
+}
+
+.open-permission-request-basedata {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #303a74;
+    padding: 10px;
+}
+.open-permission-request-basedata>p {
+    background-color: #f0e9d1;
+    margin: 2px;
+    padding: 10px;
+}
+.permission-request-from {
+    background-color: #f0d7b8 !important;
+}
+
+.permission-request-validto {
+    background-color: #fc865f !important;
+}
+
+.open-permission-request-details {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+.open-permission-request-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.open-permission-request-basedata-details {
+    font-weight: bold;
+}
+.open-permission-request-details-product {
+    background-color: #adc7d0;
+    padding-left: 10px;
+    margin: 2px;
+    display: flex;
+    flex-direction: row;
+}
+.open-permission-request-details-product>div {
+    width: 80%;
+}
+.open-permission-request-details-product>div>p {
+    font-weight: bold;
+}
+.open-permission-request-details-product>img {
+    width: auto;
+    height: 60px;
+    float: left;
+    max-width: 120px;
+    margin: 5px 20px 5px 10px;
+    border-radius: 15px;
+}
+.open-permission-request-details-product-category-accessmode {
+    color: brown;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.accept-request-button {
+    background-color: #93d08a;
+    color: white;
+    font-size: 1.4em;
+    padding: 5px 25px;
+    font-weight: bold;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 2px 2px 5px grey;
+    margin: 1px 15px;
+}
+.accept-request-button:hover {
+    box-shadow: 0px 0px 1px #777;
+    background-color: #59c600;
+}
+.reject-request-button {
+    background-color: #d09a9a;
+    color: white;
+    font-size: 1.4em;
+    padding: 5px 25px;
+    font-weight: bold;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 2px 2px 5px grey;
+    margin: 1px 15px;
+}
+.reject-request-button:hover {
+    box-shadow: 0px 0px 1px #777;
+    background-color: #bc3e00;
+}
+
+.revoke-permissions-button {
+    background-color: #d09a9a;
+    color: white;
+    font-size: 1.4em;
+    padding: 5px 25px;
+    font-weight: bold;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 2px 2px 5px grey;
+    margin: 1px 15px;
+    float: right;
+}
+.revoke-permissions-button:hover {
+    box-shadow: 0px 0px 1px #777;
+    background-color: #bc3e00;
+}
+
+
+.edit-button {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 15px;
+    cursor: pointer;
+    background-color: #dfba28;
+    font-size: 1.4em;
+    border-radius: 6px;
+    box-shadow: 2px 2px 5px grey;
+    color: white;
+    padding: 1px 25px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    border-image: initial;
+}
+.edit-button:hover {
+    background-color: #dfa103;
+    box-shadow: 0px 0px 1px #777;
+}
+
+.edit-button img {
+    width: 25px;
+    height: auto;
+    margin: auto;
+}
+.edit-button p {
+    padding-left: 10px;
+    font-weight: bold;
+    margin: 2px 1px;
+}
+
+
+
+.admin-audit-log {
+    width: 100%;
+}
+.admin-audit-log thead tr th {
+    border-bottom: 1px solid black;
+    background-color: #fff8de;
+}
+.admin-audit-log tbody tr td {
+    padding: 5px;
+}
+.admin-audit-log tbody tr td.alt {
+    background-color: #f8f7f2;
+}
+
+
+.message {
+    width:90%;
+    background-color: greenyellow;
+    border: 1px solid green;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    margin: 15px auto;
+    border-radius: 5px;
+}
+
+.error-message {
+    width:90%;
+    background-color: salmon;
+    border: 1px solid red;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    margin: 15px auto;
+    border-radius: 5px;
+}

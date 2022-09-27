@@ -1,0 +1,101 @@
+
+.ado-projects-area {
+    display: flex;
+    width: 100%;
+    flex-basis: 30%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ado-project-tile {
+    display: flex;
+    width: 30%;
+    background-color: #adc7d0;
+    align-items: center;
+    justify-content: left;
+    padding: 5px;
+    transition: all 0.2s ease;
+    /*z-index: 1;*/
+    margin: 5px;
+    position: relative;
+}
+.ado-project-tile-image {
+    height: auto;
+    transition: all 0.2s ease;
+    width: 20%;
+    border-radius: 25px;
+    float: left;
+    max-width: 120px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+.ado-project-details {
+    padding-right: 15px;
+    margin: 5px;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+}
+.ado-project-details h2 {
+    font-size: 18px;
+    text-align: left;
+}
+.ado-project-description {
+    flex-grow: 1;
+    width: 100%;
+    font-style: italic;
+    padding: 5px;
+    color: #444;
+    font-family: monospace;
+    word-break: break-word;
+}
+.ado-button-area {
+    padding: 0px 3%;
+}
+.ado-sync-button {
+    background-color: #55aaff;
+    color: white;
+    font-size: 1.4em;
+    padding: 5px 25px;
+    font-weight: bold;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 2px 2px 5px grey;
+}
+.ado-sync-button:hover {
+    background-color: #72c2ff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0px 0px 1px #777;
+}
+.ado-project-tile-sync-image {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 20px;
+    height: auto;
+}
+
+.tooltip-parent {
+    position: relative;
+    display: inline-block;
+}
+.tooltip-parent .tooltip-content {
+    visibility: hidden;
+    width: 420px;
+    background-color: #474747;
+    color: #fff;
+    padding: 5px 0;
+    border-radius: 6px;
+    
+    position: absolute;
+    z-index: 21;
+}
+.tooltip-parent:hover .tooltip-content {
+    visibility: visible;
+}

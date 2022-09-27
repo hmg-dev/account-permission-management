@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>APM - Account Permission Management - ADMIN</title>
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="toolbox.js"></script>
+	<link rel="stylesheet" href="style.admin.css"/>
+	<link rel="stylesheet" href="style.menu.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.theme.min.css"/>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+</head>
+
+<body id=body>
+	<h1>[[#{admin.start.headline}]]</h1>
+	
+	<div th:if="${message}" class="message">
+		<span th:text="${message}"></span>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<span th:text="${errorMessage}"></span>
+	</div>
+
+	<div th:replace="fragments/adminMenu :: adminMenu"></div>
+	
+	<h2 th:text="#{admin.start.open_requests.headline}"></h2>
+	
+	<div id="open-requests-area">
+		<div class="open-permission-request no-requests" th:if="${#lists.isEmpty(requests)}" th:text="#{admin.start.open_requests.norequests}"></div>
+		<div class="open-permission-request" th:each="request : ${requests}">
+			<div class="open-permission-request-basedata">
+				<p>[[#{admin.start.open_requests.base_data.from}]] <span class="open-permission-request-basedata-details" th:text="${request.requestFrom}"></span></p>
+				<p class="permission-request-from">[[#{admin.start.open_requests.base_data.for}]] <span class="open-permission-request-basedata-details" th:text="${request.requestFor}"></span></p>
+				<p>[[#{admin.start.open_requests.base_data.date}]] <span class="open-permission-request-basedata-details" th:text="${#temporals.format(request.getRequestDateTime(), 'dd-MM-yyyy HH:mm')}"></span></p>
+				<p class="permission-request-validto" th:if="${request.getValidToTimestamp() != null}">[[#{admin.start.open_requests.base_data.validTo}]] <span class="open-permission-request-basedata-details" th:text="${#temporals.format(request.getValidToDateTime(), 'dd-MM-yyyy')}"></span></p>
+			</div>
+			<div class="open-permission-request-details">
+				<div class="open-permission-request-details-product" th:each="product : ${request.products}">
+					<img th:src="${#strings.concat('images/', product.key, '.png')}" />
+					<div>
+						<p th:text="${product.name}"></p>
+						<ul th:if="${not #lists.isEmpty(request.requestSubcategories)}">
+							<th:block th:each="cat : ${request.requestSubcategories}">
+							<li th:if="${cat.productCategory != null and cat.productCategory.product != null and cat.productCategory.product.id == product.id and cat.productCategory.name != 'zcomment'}">
+								[[${cat.productCategory.name}]] <span class="open-permission-request-details-product-category-accessmode" th:text="${cat.accessMode}"></span>
+							</li>
+							<li th:if="${cat.productCategory != null and cat.productCategory.product != null and cat.productCategory.product.id == product.id and not #strings.isEmpty(cat.comment)}">
+								<span class="open-permission-request-details-product-category-accessmode" th:text="#{admin.start.open_requests.category_comment}"></span> [[${cat.comment}]]
+							</li>
+							</th:block>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="open-permission-request-actions">
+				<form action="#" th:action="@{/acceptRequest}" method="post" th:id="${#strings.concat('accept-form-', request.id)}">
+					<div class="confirm-accept" th:title="#{admin.start.open_requests.actions.accept.confirm_title}" th:id="${#strings.concat('ac-dialog-', request.id)}">
+						<p th:utext="#{admin.start.open_requests.actions.accept.confirm_text(${request.requestFor})}"></p>
+					</div>
+					<input type="hidden" name="requestId" th:value="${request.id}" />
+					<button onclick="event.preventDefault();" class="accept-request-button" type="submit" name="accept-request" th:text="#{admin.start.open_requests.actions.accept}"></button>
+				</form>
+				<form action="#" th:action="@{/rejectRequest}" method="post">
+					<div class="confirm-reject" th:title="#{admin.start.open_requests.actions.reject.confirm_title}" th:id="${#strings.concat('dialog-', request.id)}">
+						<p th:utext="#{admin.start.open_requests.actions.reject.confirm_text(${request.requestFor})}"></p>
+						<input type="text" style="width: 100%" />
+					</div>
+					<input type="hidden" name="reason" th:id="${#strings.concat('reason-', request.id)}" />
+					<input type="hidden" name="requestId" th:value="${request.id}" />
+					<button onclick="event.preventDefault();" class="reject-request-button" name="reject-request" th:text="#{admin.start.open_requests.actions.reject}"></button>
+				</form>
+				<a th:href="'/adminEdit?requestId=' + ${request.id}" th:if="${#strings.equalsIgnoreCase(request.resolution,'OPEN')}">
+					<div class="edit-button">
+						<img src="images/edit.svg" />
+						<p th:text="#{request.edit.button}"></p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+	$( function() {
+		let dialogWidth = $(window).width() * 0.4;
+		$( ".confirm-reject" ).dialog({
+			autoOpen: false,
+			resizable: false,
+			height: "auto",
+			width: dialogWidth,
+			minWidth: 400,
+			modal: true,
+			buttons: {
+				"Confirm": function() {
+					let comment = $(this).find("input").first().val();
+					let requestId = $(this).attr("id").replace("dialog-", "");
+					$("#reason-"+requestId).val(comment);
+					$("#reason-"+requestId).parent().submit();
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+        $( ".confirm-accept" ).dialog({
+            autoOpen: false,
+            resizable: false,
+            height: "auto",
+            width: dialogWidth,
+            minWidth: 400,
+            modal: true,
+            buttons: {
+                "Confirm": function() {
+                    let requestId = $(this).attr("id").replace("ac-dialog-", "");
+                    $("#accept-form-"+requestId).submit();
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+
+		$(".reject-request-button").click(function(){
+			let rid = $(this).parent().find("[name='requestId']").first().val();
+			$("#dialog-"+rid).dialog("open");
+		});
+        $(".accept-request-button").click(function(){
+            let rid = $(this).parent().find("[name='requestId']").first().val();
+            $("#ac-dialog-"+rid).dialog("open");
+        });
+	} );
+</script>
+</html>

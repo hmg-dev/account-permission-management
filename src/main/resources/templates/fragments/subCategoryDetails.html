@@ -1,0 +1,39 @@
+<div th:fragment="subCategoryDetails" th:if="${category.active}" class="sub-category-details">
+	<input type="hidden" name="categories[]" th:id="${#strings.concat(product.key, '_', category.key)}"
+		   th:value="${selectedProductCategories != null and #maps.containsKey(selectedProductCategories, #strings.concat(product.key, '_', category.key))}?${selectedProductCategories.get(#strings.concat(product.key, '_', category.key))}:''" />
+	<div class="sub-category-name" th:if="${not #strings.equals('CUSTOM', category.key)}">
+		[[${category.name}]]
+		<th:block th:if="${not #strings.isEmpty(category.description)}">
+			<br/>
+			<span th:text="${category.description}"></span>
+		</th:block>
+	</div>
+	<div th:if="${#strings.equals('CUSTOM', category.key)}" style="width: 95%">
+		<span th:text="#{request.subcategory.entry.custom}"></span>
+		<input type="text" class="sub-category-custom-text" th:name="${#strings.concat(product.key, '_', category.key, '_comment')}" 
+			   th:value="${not #strings.isEmpty(allParams?.get(#strings.concat(product.key, '_', category.key, '_comment')))}?${allParams?.get(#strings.concat(product.key, '_', category.key, '_comment'))}:''" />
+	</div>
+
+	<div th:if="${not #strings.equals('CUSTOM', category.key) and #strings.equals('azure-devops', product.key)}" th:class="${not #strings.isEmpty(allParams?.get(#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).STAKEHOLDER.key())))}?'sub-category-access-mode-selected':'sub-category-access-mode'">
+		[[#{request.subcategory.mode.stakeholder}]]
+		<input type="hidden" th:name="${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).STAKEHOLDER.key())}"
+			   th:id="${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).STAKEHOLDER.key())}"
+			   th:value="${not #strings.isEmpty(allParams?.get(#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).STAKEHOLDER.key())))}?${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).STAKEHOLDER.key())}:''" />
+	</div>
+	<div th:if="${not #strings.equals('CUSTOM', category.key)}" th:class="${allParams != null and not #strings.isEmpty(allParams.get(#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).READ.key())))}?'sub-category-access-mode-selected':'sub-category-access-mode'">
+		[[#{request.subcategory.mode.read}]]
+		<input type="hidden" th:name="${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).READ.key())}"
+			   th:id="${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).READ.key())}"
+			   th:value="${not #strings.isEmpty(allParams?.get(#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).READ.key())))}?${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).READ.key())}:''" />
+	</div>
+	<div th:if="${not #strings.equals('CUSTOM', category.key)}" th:class="${allParams != null and not #strings.isEmpty(allParams.get(#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).WRITE.key())))}?'sub-category-access-mode-selected':'sub-category-access-mode'">
+		[[#{request.subcategory.mode.write}]]
+		<input type="hidden" th:name="${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).WRITE.key())}" th:id="${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).WRITE.key())}" 
+			   th:value="${not #strings.isEmpty(allParams?.get(#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).WRITE.key())))}?${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).WRITE.key())}:''" />
+	</div>
+	<div th:if="${not #strings.equals('CUSTOM', category.key)}" th:class="${allParams != null and not #strings.isEmpty(allParams.get(#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).ADMIN.key())))}?'sub-category-access-mode-selected':'sub-category-access-mode'">
+		[[#{request.subcategory.mode.admin}]]
+		<input type="hidden" th:name="${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).ADMIN.key())}" th:id="${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).ADMIN.key())}" 
+			   th:value="${not #strings.isEmpty(allParams?.get(#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).ADMIN.key())))}?${#strings.concat(product.key, '_', category.key, '_', T(dev.hmg.apm.model.ProductAccessLevel).ADMIN.key())}:''" />
+	</div>
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>APM - Account Permission Management - ADMIN</title>
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="toolbox.js"></script>
+	<link rel="stylesheet" href="style.admin.css"/>
+	<link rel="stylesheet" href="style.menu.css"/>
+	<link rel="stylesheet" href="style.paging.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.theme.min.css"/>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+</head>
+
+<body id=body>
+	<h1>[[#{admin.auditlog.headline}]]</h1>
+	
+	<div th:if="${message}" class="message">
+		<span th:text="${message}"></span>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<span th:text="${errorMessage}"></span>
+	</div>
+
+	<div th:replace="fragments/adminMenu :: adminMenu"></div>
+	
+	<div th:replace="fragments/paginationBar :: paginationBar"></div>
+	
+	<table id="audit-log" class="admin-audit-log">
+		<thead>
+			<tr>
+				<th th:text="#{admin.auditlog.date}"></th>
+				<th th:text="#{admin.auditlog.user}"></th>
+				<th th:text="#{admin.auditlog.target_user}"></th>
+				<th th:text="#{admin.auditlog.action}"></th>
+				<th th:text="#{admin.auditlog.description}"></th>
+				<th th:text="#{admin.auditlog.remark}"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${#lists.isEmpty(auditLogEntries)}">
+				<td th:colspan="6" th:text="#{admin.auditlog.noentries}" class="no-requests"></td>
+			</tr>
+			<tr th:each="al,iterStat : ${auditLogEntries}">
+				<td th:class="${iterStat.odd}?'': 'alt'" th:text="${#temporals.format(al.getEntryDateTime(), 'dd-MM-yyyy HH:mm')}"></td>
+				<td th:class="${iterStat.odd}?'': 'alt'" th:text="${al.user}"></td>
+				<td th:class="${iterStat.odd}?'': 'alt'" th:text="${al.targetUser}"></td>
+				<td th:class="${iterStat.odd}?'': 'alt'" th:text="${al.action}"></td>
+				<td th:class="${iterStat.odd}?'': 'alt'" th:text="${al.description}"></td>
+				<td th:class="${iterStat.odd}?'': 'alt'" th:text="${al.getComment()}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div th:replace="fragments/paginationBar :: paginationBar"></div>
+</body>
+</html>

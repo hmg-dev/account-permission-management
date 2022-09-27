@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>APM - Account Permission Management</title>
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="toolbox.js"></script>
+	<link rel="stylesheet" href="style.css"/>
+	<link rel="stylesheet" href="style.admin.css"/>
+	<link rel="stylesheet" href="style.menu.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.theme.min.css"/>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+</head>
+
+<body id=body>
+	<h1>[[#{requests.my.headline}]]</h1>
+
+	<div th:replace="fragments/userMenu :: userMenu"></div>
+	
+	<div th:if="${message}" class="message">
+		<span th:text="${message}"></span>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<span th:text="${errorMessage}"></span>
+	</div>
+
+	<div id="open-requests-area">
+		<div class="open-permission-request no-requests" th:if="${#lists.isEmpty(requests)}" th:text="#{requests.my.norequests}"></div>
+		<th:block th:each="request : ${requests}">
+		<div th:class="${#strings.equalsIgnoreCase(request.resolution,'OPEN')}?'open-permission-request':(${#strings.equalsIgnoreCase(request.resolution, 'REJECTED')}?'open-permission-request rejected-permission-request':'open-permission-request accepted-permission-request')">
+			<a th:href="'/edit?requestId=' + ${request.id}" th:if="${#strings.equalsIgnoreCase(request.resolution,'OPEN')}">
+				<div class="edit-button">
+					<img src="images/edit.svg" />
+					<p th:text="#{request.edit.button}"></p>
+				</div>
+			</a>
+			<div class="open-permission-request-basedata">
+				<p class="permission-request-from">[[#{admin.start.open_requests.base_data.for}]] <span class="open-permission-request-basedata-details" th:text="${request.requestFor}"></span></p>
+				<p>[[#{admin.start.open_requests.base_data.date}]] <span class="open-permission-request-basedata-details" th:text="${#temporals.format(request.getRequestDateTime(), 'dd-MM-yyyy HH:mm')}"></span></p>
+				<p>[[#{requests.my.status}]] <span class="open-permission-request-basedata-details" th:text="${request.resolution}"></span></p>
+				<p th:if="${request.getValidToTimestamp() != null}">[[#{admin.start.open_requests.base_data.validTo}]] <span class="open-permission-request-basedata-details" th:text="${#temporals.format(request.getValidToDateTime(), 'dd-MM-yyyy')}"></span></p>
+				<p th:if="${not #strings.isEmpty(request.getComment())}" class="permission-request-from">[[#{requests.my.comment}]] <span class="open-permission-request-basedata-details" th:text="${request.getComment()}"></span></p>
+			</div>
+			<div class="open-permission-request-details">
+				<div class="open-permission-request-details-product" th:each="product : ${request.products}">
+					<img th:src="${#strings.concat('images/', product.key, '.png')}" />
+					<div>
+						<p th:text="${product.name}"></p>
+						<ul th:if="${not #lists.isEmpty(request.requestSubcategories)}">
+							<th:block th:each="cat : ${request.requestSubcategories}">
+								<li th:if="${cat.productCategory != null and cat.productCategory.product != null and cat.productCategory.product.id == product.id and cat.productCategory.name != 'zcomment'}">
+									[[${cat.productCategory.name}]] <span class="open-permission-request-details-product-category-accessmode" th:text="${cat.accessMode}"></span>
+								</li>
+								<li th:if="${cat.productCategory != null and cat.productCategory.product != null and cat.productCategory.product.id == product.id and not #strings.isEmpty(cat.comment)}">
+									<span class="open-permission-request-details-product-category-accessmode" th:text="#{admin.start.open_requests.category_comment}"></span> [[${cat.comment}]]
+								</li>
+							</th:block>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		</th:block>
+	</div>
+</body>
+</html>

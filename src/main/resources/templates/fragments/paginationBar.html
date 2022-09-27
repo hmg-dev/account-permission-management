@@ -1,0 +1,11 @@
+<div class="pagination-bar" th:fragment="paginationBar" th:if="${paging != null && paging.pageCount > 1}" xmlns:th="http://www.thymeleaf.org">
+	<span th:text="#{common.page_bar.pages(${paging.pageCount})}"></span>
+	<a th:if="${paging.currentPage > 0}" href="?page=0" th:text="#{common.page_bar.first}"></a>
+	<a th:if="${paging.currentPage > 0}" th:href="${'?page=' + (paging.currentPage - 1)}">&#171;</a>
+	<th:block th:each="i: ${#numbers.sequence(paging.firstVisiblePage, paging.firstVisiblePage+(paging.visiblePageNumberAmount-1))}">
+		<span th:if="${i == paging.currentPage}" th:text="${'[' + (i+1) + ']'}"></span>
+		<a th:if="${i != paging.currentPage}" th:href="${'?page=' + i}" th:text="${i+1}"></a>
+	</th:block>
+	<a th:if="${paging.currentPage < (paging.pageCount - 1)}" th:href="${'?page=' + (paging.currentPage + 1)}">&#187;</a>
+	<a th:if="${paging.currentPage < (paging.pageCount - 1)}" th:href="${'?page=' + (paging.pageCount - 1)}" th:text="#{common.page_bar.last}"></a>
+</div>

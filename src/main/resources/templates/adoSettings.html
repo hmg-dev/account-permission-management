@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>APM - Account Permission Management - ADMIN</title>
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="toolbox.js"></script>
+	<link rel="stylesheet" href="style.admin.css"/>
+	<link rel="stylesheet" href="style.menu.css"/>
+	<link rel="stylesheet" href="style.integration.ado.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.theme.min.css"/>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+</head>
+
+<body id=body>
+	<h1 th:text="#{integration.ado.settings.headline}"></h1>
+	
+	<div th:if="${message}" class="message">
+		<span th:text="${message}"></span>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<span th:text="${errorMessage}"></span>
+	</div>
+
+	<div th:replace="fragments/adminMenu :: adminMenu"></div>
+	
+	<h2 th:text="#{integration.ado.settings.projects}"></h2>
+	<div class="ado-button-area">
+		<form action="#" th:action="@{/adoSyncProjects}" method="post">
+			<button class="ado-sync-button" id="ado-sync-button" type="submit" name="request" th:text="#{integration.ado.settings.sync}"></button>
+		</form>
+	</div>
+	<div class="ado-projects-area">
+		<th:block th:each="p : ${adoProjects}">
+		<div class="ado-project-tile">
+			<img src="images/integrations/ado/projects.svg" class="ado-project-tile-image"/>
+			<div class="ado-project-details">
+				<a th:href="'https://dev.azure.com/_REPLACE_WITH_ORGANIZATIONNAME_/' + ${p.name}">
+					<h2 th:text="${p.name}"></h2>
+				</a>
+				<p class="ado-project-description" th:text="${p.description}"></p>
+				<!--
+				<div class="tooltip-content">
+					<p>ID: [[${p.id}]]</p>
+					<p>State: [[${p.state}]]</p>
+					<p>Capabilities: [[${p.capabilities}]]</p>
+					<p>Visibility: [[${p.visibility}]]</p>
+					<p>LastUpdateTime: [[${p.lastUpdateTime}]]</p>
+				</div>
+				-->
+			</div>
+			<img th:if="${not #lists.contains(adoCategories, p.name)}" th:title="#{integration.ado.settings.sync_required}" src="images/integrations/ado/sync-required.png" class="ado-project-tile-sync-image"/>
+			<img th:if="${#lists.contains(adoCategories, p.name)}" th:title="#{integration.ado.settings.sync_ok}" src="images/integrations/ado/in-sync.png" class="ado-project-tile-sync-image"/>
+		</div>
+		</th:block>
+	</div>
+
+</body>
+</html>

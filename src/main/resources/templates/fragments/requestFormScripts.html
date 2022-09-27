@@ -1,0 +1,34 @@
+<script th:fragment="requestFormScripts" type="text/javascript" th:inline="javascript">
+    for(let cba of document.getElementsByClassName("choose-button-area")) {
+        cba.onclick = chooseTargetUser
+    }
+    for(let cba of document.getElementsByClassName("choose-button-area-selected")) {
+        cba.onclick = chooseTargetUser
+    }
+    for(let cta of document.getElementsByClassName("choose-tool-area")) {
+        cta.onclick = toggleProductSelection
+    }
+    for(let cta of document.getElementsByClassName("choose-tool-area-selected")) {
+        cta.onclick = toggleProductSelection
+    }
+    for(let pcd of document.getElementsByClassName("sub-category-access-mode")) {
+        pcd.onclick = toogleCategorySelection
+    }
+    for(let pcd of document.getElementsByClassName("sub-category-access-mode-selected")) {
+        pcd.onclick = toogleCategorySelection
+    }
+    for(let cif of document.getElementsByClassName("sub-category-custom-text")) {
+        cif.oninput = categoryCommentChanged
+    }
+
+    $(function() {
+        $( "#cancellationDate" ).datepicker({ dateFormat: "yy-mm-dd", minDate: +1});
+    });
+
+    document.getElementById("targetUserMail").oninput = validateTargetUserMail
+    /*[# th:if="${devMode or isAdmin}"]*/
+    isValidTargetUserMail = function(targetMail) { return !isBlank(targetMail) };
+    /*[/]*/
+    document.getElementById("request-button").onclick = sendRequestForm;
+    updateRequestButtonState();
+</script>

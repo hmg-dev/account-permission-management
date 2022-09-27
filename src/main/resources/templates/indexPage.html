@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>APM - Account Permission Management</title>
+	
+		<script type="text/javascript" src="toolbox.js"></script>
+		<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+		<script type="text/javascript" src="jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="style.css"/>
+		<link rel="stylesheet" href="style.menu.css"/>
+		<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.min.css"/>
+		<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.theme.min.css"/>
+		<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+	</head>
+
+	<body id=body>
+		<h1>[[#{request.start.headline}]]</h1>
+
+		<div th:replace="fragments/userMenu :: userMenu"></div>
+		
+		<div th:if="${message}" class="message">
+			<span th:text="${message}"></span>
+		</div>
+		<div th:if="${errorMessage}" class="error-message">
+			<span th:text="${errorMessage}"></span>
+		</div>
+
+		<form action="#" method="post" th:action="@{/requestPermissions}">
+			<th:block th:replace="fragments/requestForm :: requestForm"></th:block>
+		</form>
+	</body>
+	<script th:replace="fragments/requestFormScripts :: requestFormScripts"></script>
+</html>

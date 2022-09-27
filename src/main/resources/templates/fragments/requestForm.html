@@ -1,0 +1,92 @@
+<th:block th:fragment="adminRequestForm">
+	<th:block th:replace="fragments/requestForm :: requestFormAdminUserArea"></th:block>
+	<hr/>
+	<th:block th:replace="fragments/requestForm :: requestFormProductsArea"></th:block>
+</th:block>
+
+<th:block th:fragment="requestForm">
+	<th:block th:replace="fragments/requestForm :: requestFormUserArea"></th:block>
+	<hr/>
+	<th:block th:replace="fragments/requestForm :: requestFormProductsArea"></th:block>
+</th:block>
+
+<th:block th:fragment="requestFormProductsArea">
+	<h2 th:text="#{request.tools.choose.headline}"></h2>
+	<h3 th:text="#{request.tools.choose.disclaimer}" id="available-tools-disclaimer"></h3>
+	<div class="choose-area">
+		<th:block th:each="product : ${products}">
+			<div th:class="${selectedProducts != null and #lists.contains(selectedProducts, product.key)}?'choose-tool-area-selected':'choose-tool-area'">
+				<div>
+					<img th:src="${#strings.concat('images/', product.key, '.png')}" class="choose-tool-image"/>
+					<div class="choose-tool-details">
+						<h2 th:text="${product.name}"></h2>
+						<p class="choose-tool-description" th:text="${product.description}"></p>
+					</div>
+				</div>
+				<input type="hidden" name="products[]" th:id="${product.key}" th:value="${selectedProducts != null and #lists.contains(selectedProducts, product.key)}?${product.key}:''" />
+			</div>
+		</th:block>
+	</div>
+	<div id="sub-category-stuff" th:style="${#lists.isEmpty(selectedProductCategories)}?'display: none':''">
+		<hr/>
+		<h2 th:text="#{request.subcategory.headline}"></h2>
+		<div class="sub-categories-area">
+			<th:block th:each="product : ${products}">
+				<div class="sub-category" th:if="${not #lists.isEmpty(product.categories)}" th:id="${#strings.concat('category_', product.key)}"
+					 th:style="${selectedProducts != null and #lists.contains(selectedProducts, product.key)}?'':'display: none'">
+					<h3 class="sub-category-product" th:text="${product.name}"></h3>
+					<div class="sub-category-choose-area">
+						<th:block th:each="category : ${product.categories}">
+							<div th:replace="fragments/subCategoryDetails :: subCategoryDetails"></div>
+						</th:block>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</div>
+	<hr/>
+	<div class="button-area">
+		<button class="request-button-disabled" id="request-button" type="submit" name="request" th:text="#{request.button}"></button>
+	</div>
+</th:block>
+
+<th:block th:fragment="requestFormUserArea">
+	<h2 th:if="${not #strings.isEmpty(user.givenName)}" th:text="#{request.start.choose.headline(${user.givenName} + ' ' + ${user.familyName})}"></h2>
+	<h2 th:if="${#strings.isEmpty(user.givenName)}" th:text="#{request.start.choose.headline(${user.name})}"></h2>
+	<div class="choose-area">
+		<div th:class="${#strings.equalsIgnoreCase('myself', targetUserType) or #strings.isEmpty(targetUserType)}?'choose-button-area-selected':'choose-button-area'" title="myself">
+			<span th:text="#{request.start.choose.myself}"></span>
+		</div>
+		<div th:class="${#strings.equalsIgnoreCase('other', targetUserType)}?'choose-button-area-selected':'choose-button-area'" title="other">
+			<span th:text="#{request.start.choose.other}"></span>
+		</div>
+		<input type="hidden" id="targetUser" name="targetUserType" th:value="${#strings.isEmpty(targetUserType)?'myself':targetUserType}" />
+	</div>
+	<div class="choose-other-target-user" id="otherTargetUserArea" th:style="${#strings.equals('other', targetUserType)?'':'display: none'}">
+		<p th:text="#{request.start.choose.enterTargetUser}"></p>
+		<input type="text" name="targetUserMail" id="targetUserMail" th:value="${targetUserMail}" />
+		<hr style="margin: 0px;"/>
+		<p th:utext="#{request.start.choose.enterCancellationDate}"></p>
+		<input type="text" name="cancellationDate" id="cancellationDate" th:value="${allParams?.get('cancellationDate')}" />
+	</div>
+</th:block>
+
+<th:block th:fragment="requestFormAdminUserArea">
+	<h2 th:text="#{admin.request.edit.choose.headline}"></h2>
+	<div class="choose-area">
+		<div th:class="${#strings.equalsIgnoreCase('myself', targetUserType) or #strings.isEmpty(targetUserType)}?'choose-button-area-selected':'choose-button-area'" title="myself">
+			<span th:text="#{admin.request.edit.choose.requester}"></span>
+		</div>
+		<div th:class="${#strings.equalsIgnoreCase('other', targetUserType)}?'choose-button-area-selected':'choose-button-area'" title="other">
+			<span th:text="#{admin.request.edit.choose.other}"></span>
+		</div>
+		<input type="hidden" id="targetUser" name="targetUserType" th:value="${#strings.isEmpty(targetUserType)?'myself':targetUserType}" />
+	</div>
+	<div class="choose-other-target-user" id="otherTargetUserArea" th:style="${#strings.equals('other', targetUserType)?'':'display: none'}">
+		<p th:text="#{request.start.choose.enterTargetUser}"></p>
+		<input type="text" name="targetUserMail" id="targetUserMail" th:value="${targetUserMail}" />
+		<hr style="margin: 0px;"/>
+		<p th:utext="#{request.start.choose.enterCancellationDate}"></p>
+		<input type="text" name="cancellationDate" id="cancellationDate" th:value="${allParams?.get('cancellationDate')}" />
+	</div>
+</th:block>

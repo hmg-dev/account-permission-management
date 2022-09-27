@@ -1,0 +1,47 @@
+<div id="menu" th:fragment="adminMenu">
+	<div id="menu-button">
+		<img src="images/hmg-menu.png" class="menu-button-icon" onclick="toggleMenu(event)" />
+	</div>
+	<div id="menu-entries" class="menu-hidden">
+		<a href="/">
+			<div class="submenu">
+				<img src="images/default.png" class="menu-icon"/>
+				<p th:text="#{menu.entry.back_to_page}"></p>
+			</div>
+		</a>
+		<a href="/admin">
+			<div class="submenu">
+				<img src="images/menu_adminIcon.png" class="menu-icon"/>
+				<p th:text="#{menu.entry.admin_ui}"></p>
+			</div>
+		</a>
+		<a href="/userPermissions">
+			<div class="submenu">
+				<img src="images/menu_userIcon.png" class="menu-icon"/>
+				<p th:text="#{menu.entry.user_permissions}"></p>
+			</div>
+		</a>
+		<a href="/soonExpiringPermissions">
+			<div class="submenu">
+				<img src="images/menu_expiringPermissionsIcon.png" class="menu-icon"/>
+				<p th:text="#{menu.entry.expiring_permissions}"></p>
+			</div>
+		</a>
+		<a href="/auditLog">
+			<div class="submenu">
+				<img src="images/menu_auditlogIcon.png" class="menu-icon"/>
+				<p th:text="#{menu.entry.auditlog}"></p>
+			</div>
+		</a>
+		<a href="/adoSettings">
+			<div class="submenu">
+				<img src="images/integrations/ado/ado-settings.svg" class="menu-icon"/>
+				<p th:text="#{menu.entry.ado_settings}"></p>
+			</div>
+		</a>
+	</div>
+	<script type="text/javascript">
+        $("#menu-entries").hide();
+        $("#menu-entries").removeClass("menu-hidden");
+	</script>
+</div>

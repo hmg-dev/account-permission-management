@@ -1,0 +1,35 @@
+<div id="menu" th:fragment="userMenu">
+	<div id="menu-button">
+		<img src="images/hmg-menu.png" class="menu-button-icon" onclick="toggleMenu(event)" />
+	</div>
+	<div id="menu-entries" class="menu-hidden">
+		<a href="/">
+			<div class="submenu">
+				<img src="images/default.png" class="menu-icon">
+				<p th:text="#{menu.entry.back_to_page}"></p>
+			</div>
+		</a>
+		<a href="/myRequests">
+			<div class="submenu">
+				<img src="images/menu_myRequestsIcon.png" class="menu-icon">
+				<p th:text="#{menu.entry.myrequests}"></p>
+			</div>
+		</a>
+		<a href="/myPermissions">
+			<div class="submenu">
+				<img src="images/menu_userIcon.png" class="menu-icon">
+				<p th:text="#{menu.entry.mypermissions}"></p>
+			</div>
+		</a>
+		<a href="/admin" th:if="${isAdmin}">
+			<div class="submenu">
+				<img src="images/menu_adminIcon.png" class="menu-icon">
+				<p th:text="#{menu.entry.admin_ui}"></p>
+			</div>
+		</a>
+	</div>
+	<script type="text/javascript">
+        $("#menu-entries").hide();
+        $("#menu-entries").removeClass("menu-hidden");
+	</script>
+</div>

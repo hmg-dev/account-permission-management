@@ -1,0 +1,53 @@
+pool:
+  vmImage: 'Ubuntu-22.04'
+
+trigger:
+  branches:
+    include:
+      - master
+
+variables:
+  imageName: 'account-permission-management'
+  NODE_OPTIONS: '--use-openssl-ca'
+  registry: '_REPLACEME_'
+
+steps:
+  - script: |
+      wget "https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64" -O hadolint
+      chmod +x hadolint
+      ./hadolint Dockerfile
+      exit $?
+    displayName: 'Dockerfile Linternazi'
+    
+  - task: SonarQubePrepare@4
+    inputs:
+      SonarQube: 'sonar-qube'
+      scannerMode: 'Other'
+
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'verify'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      sonarQubeRunAnalysis: true
+      jdkVersionOption: 1.11
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: '$(registry)'
+      repository: '$(imageName)'
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+      tags: |
+        $(Build.BuildNumber)
+        latest
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: '$(registry)'
+      repository: '$(imageName)'
+      command: 'push'
+      tags: |
+        $(Build.BuildNumber)
+        latest

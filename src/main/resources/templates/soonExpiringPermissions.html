@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>APM - Account Permission Management - ADMIN</title>
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="toolbox.js"></script>
+	<link rel="stylesheet" href="style.admin.css"/>
+	<link rel="stylesheet" href="style.menu.css"/>
+	<link rel="stylesheet" href="style.users.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.theme.min.css"/>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+</head>
+
+<body id=body>
+	<h1>[[#{admin.expiring_permissions.headline(${days})}]]</h1>
+	
+	<div th:if="${message}" class="message">
+		<span th:text="${message}"></span>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<span th:text="${errorMessage}"></span>
+	</div>
+	
+	<div th:replace="fragments/adminMenu :: adminMenu"></div>
+	
+	<table id="user-permissions" class="admin-audit-log">
+		<thead>
+		<tr>
+			<th th:text="#{admin.expiring_permissions.usermail}"></th>
+			<th th:text="#{admin.expiring_permissions.product}"></th>
+			<th th:text="#{admin.expiring_permissions.validto}"></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:if="${#lists.isEmpty(assignments)}">
+			<td th:colspan="3" th:text="#{admin.expiring_permissions.noentries}" class="no-requests"></td>
+		</tr>
+		<tr th:each="a,iterStat : ${assignments}">
+			<td th:class="${iterStat.odd}?'': 'alt'" th:text="${a.user.eMail}"></td>
+			<td th:class="${iterStat.odd}?'': 'alt'" th:text="${a.product.name}"></td>
+			<td th:class="${iterStat.odd}?'': 'alt'" th:text="${#temporals.format(a.getValidToDateTime, 'dd-MM-yyyy')}"></td>
+		</tr>
+		</tbody>
+	</table>
+</body>
+</html>

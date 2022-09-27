@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>APM - Account Permission Management - ADMIN</title>
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="toolbox.js"></script>
+	<link rel="stylesheet" href="style.admin.css"/>
+	<link rel="stylesheet" href="style.menu.css"/>
+	<link rel="stylesheet" href="style.users.css"/>
+	<link rel="stylesheet" href="style.paging.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.theme.min.css"/>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+</head>
+
+<body id=body>
+	<h1>[[#{admin.user_permissions.headline}]]</h1>
+	
+	<div th:if="${message}" class="message">
+		<span th:text="${message}"></span>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<span th:text="${errorMessage}"></span>
+	</div>
+
+	<div th:replace="fragments/adminMenu :: adminMenu"></div>
+
+	<div th:replace="fragments/paginationBar :: paginationBar"></div>
+	
+	<table id="user-permissions" class="admin-audit-log">
+		<thead>
+			<tr>
+				<th th:text="#{admin.user_permissions.usermail}"></th>
+				<th th:text="#{admin.user_permissions.productcount}"></th>
+				<th th:text="#{admin.user_permissions.categorycount}"></th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr th:if="${#lists.isEmpty(users)}">
+			<td th:colspan="3" th:text="#{admin.user_permissions.noentries}" class="no-requests"></td>
+		</tr>
+			<tr th:each="u,iterStat : ${users}">
+				<td th:class="${iterStat.odd}?'': 'alt'">
+					<a href="#" class="user-name">[[${u.eMail}]]</a>
+					<div class="user-details">
+						<span class="user-details-headline">[[${u.eMail}]]</span>
+						<a href="#" onclick="this.parentElement.style.visibility = 'hidden'" style="color:white">
+							<div class="close-button">x</div>
+						</a>
+						<div class="user-permission-details">
+							<div class="open-permission-request-details-product" th:each="pa : ${u.productAssignments}">
+								<img th:src="${#strings.concat('images/', pa.product.key, '.png')}" />
+								<div>
+									<span class="assignment-date">[[#{admin.user_permissions.creationdate}]]: [[${#temporals.format(pa.getAssignmentDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+									<br th:if="${pa.getValidToTimestamp() != null}"/>
+									<span th:if="${pa.getValidToTimestamp() != null}" class="cancellation-date">[[#{admin.user_permissions.cancellation_date}]]: [[${#temporals.format(pa.getValidToDateTime, 'dd-MM-yyyy')}]]</span>
+									<p th:text="${pa.product.name}"></p>
+									<ul th:if="${not #lists.isEmpty(u.categoryAssignments)}">
+										<th:block th:each="ca : ${u.categoryAssignments}">
+											<li th:if="${ca.category != null and ca.category.product != null and ca.category.product.id == pa.product.id and ca.category.name != 'zcomment'}">
+												[[${ca.category.name}]] <span class="open-permission-request-details-product-category-accessmode" th:text="${ca.accessMode}"></span>
+												<span class="category-assignment-date">[[#{admin.user_permissions.category_created}]]: [[${#temporals.format(ca.getAssignmentDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+												<span class="category-update-date" th:if="${ca.updateDateTimestamp > 0}">[[#{admin.user_permissions.category_updated}]]: [[${#temporals.format(ca.getUpdateDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+												<span class="category-cancellation-date" th:if="${ca.getValidToTimestamp() != null}">[[#{admin.user_permissions.category_validto}]]: [[${#temporals.format(ca.getValidToDateTime(), 'dd-MM-yyyy')}]]</span>
+											</li>
+											<li th:if="${ca.category != null and ca.category.product != null and ca.category.product.id == pa.product.id and not #strings.isEmpty(ca.comment)}">
+												<span class="open-permission-request-details-product-category-accessmode" th:text="#{admin.start.open_requests.category_comment}"></span> [[${ca.comment}]]
+												<span class="category-assignment-date">[[#{admin.user_permissions.category_created}]]: [[${#temporals.format(ca.getAssignmentDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+												<span class="category-update-date" th:if="${ca.updateDateTimestamp > 0}">[[#{admin.user_permissions.category_updated}]]: [[${#temporals.format(ca.getUpdateDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+												<span class="category-cancellation-date" th:if="${ca.getValidToTimestamp() != null}">[[#{admin.user_permissions.category_validto}]]: [[${#temporals.format(ca.getValidToDateTime(), 'dd-MM-yyyy')}]]</span>
+											</li>
+										</th:block>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<form action="#" th:action="@{/revokePermissions}" method="post" th:id="${#strings.concat('revoke-form-', #strings.toLowerCase(u.eMail.replaceAll('[^A-Za-z0-9\-]', '')))}">
+							<div class="confirm-revoke" th:title="#{admin.user_permissions.revoke.confirm_title}" th:id="${#strings.concat('revoke-dialog-', #strings.toLowerCase(u.eMail.replaceAll('[^A-Za-z0-9\-]', '')))}">
+								<p th:utext="#{admin.user_permissions.revoke.confirm_text(${u.eMail})}"></p>
+							</div>
+							<input type="hidden" name="userMail" th:value="${u.eMail}" />
+							<button onclick="event.preventDefault();" class="revoke-permissions-button" type="submit" name="revoke-permissions" th:text="#{admin.user_permissions.revoke}"></button>
+						</form>
+					</div>
+				</td>
+				<td th:class="${iterStat.odd}?'': 'alt'" th:text="${u.productAssignments.size()}"></td>
+				<td th:class="${iterStat.odd}?'': 'alt'" th:text="${u.categoryAssignments.size()}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div th:replace="fragments/paginationBar :: paginationBar"></div>
+</body>
+<script type="text/javascript">
+	for (let e of document.getElementsByClassName("user-name")) {
+        e.onclick = toggleUserDetails
+	}
+    $( function() {
+        let dialogWidth = $(window).width() * 0.4;
+        $(".confirm-revoke").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: "auto",
+            width: dialogWidth,
+            minWidth: 400,
+            modal: true,
+            buttons: {
+                "Confirm": function () {
+                    let userMail = $(this).attr("id").replace("revoke-dialog-", "");
+                    $("#revoke-form-" + userMail).submit();
+                },
+                Cancel: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $(".revoke-permissions-button").click(function(){
+            let userMail = $(this).parent().attr("id").replace("revoke-form-", "");
+            $("#revoke-dialog-"+userMail).dialog("open");
+        });
+    });
+</script>
+</html>

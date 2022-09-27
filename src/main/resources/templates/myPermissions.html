@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>APM - Account Permission Management - My Permissions</title>
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="toolbox.js"></script>
+	<link rel="stylesheet" href="style.admin.css"/>
+	<link rel="stylesheet" href="style.menu.css"/>
+	<link rel="stylesheet" href="style.users.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="jquery-ui-1.13.1.custom/jquery-ui.theme.min.css"/>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+</head>
+
+<body id=body>
+	<h1>[[#{permissions.my.headline}]]</h1>
+	
+	<div th:if="${message}" class="message">
+		<span th:text="${message}"></span>
+	</div>
+	<div th:if="${errorMessage}" class="error-message">
+		<span th:text="${errorMessage}"></span>
+	</div>
+	
+	<div th:replace="fragments/userMenu :: userMenu"></div>
+	
+	<div class="user-permission-details">
+		<div th:if="${user == null or #lists.isEmpty(user.productAssignments)}" th:text="#{permissions.my.no_permissions}"></div>
+		<th:block th:if="${user != null and not #lists.isEmpty(user.productAssignments)}">
+		<div class="open-permission-request-details-product" th:each="pa : ${user.productAssignments}">
+			<img th:src="${#strings.concat('images/', pa.product.key, '.png')}" />
+			<div>
+				<span class="assignment-date">[[#{admin.user_permissions.creationdate}]]: [[${#temporals.format(pa.getAssignmentDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+				<br th:if="${pa.getValidToTimestamp() != null}"/>
+				<span th:if="${pa.getValidToTimestamp() != null}" class="cancellation-date">[[#{admin.user_permissions.cancellation_date}]]: [[${#temporals.format(pa.getValidToDateTime, 'dd-MM-yyyy')}]]</span>
+				<p th:text="${pa.product.name}"></p>
+				<ul th:if="${not #lists.isEmpty(user.categoryAssignments)}">
+					<th:block th:each="ca : ${user.categoryAssignments}">
+						<li th:if="${ca.category != null and ca.category.product != null and ca.category.product.id == pa.product.id and ca.category.name != 'zcomment'}">
+							[[${ca.category.name}]] <span class="open-permission-request-details-product-category-accessmode" th:text="${ca.accessMode}"></span>
+							<span class="category-assignment-date">[[#{admin.user_permissions.category_created}]]: [[${#temporals.format(ca.getAssignmentDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+							<span class="category-update-date" th:if="${ca.updateDateTimestamp > 0}">[[#{admin.user_permissions.category_updated}]]: [[${#temporals.format(ca.getUpdateDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+							<span class="category-cancellation-date" th:if="${ca.getValidToTimestamp() != null}">[[#{admin.user_permissions.category_validto}]]: [[${#temporals.format(ca.getValidToDateTime(), 'dd-MM-yyyy')}]]</span>
+						</li>
+						<li th:if="${ca.category != null and ca.category.product != null and ca.category.product.id == pa.product.id and not #strings.isEmpty(ca.comment)}">
+							<span class="open-permission-request-details-product-category-accessmode" th:text="#{admin.start.open_requests.category_comment}"></span> [[${ca.comment}]]
+							<span class="category-assignment-date">[[#{admin.user_permissions.category_created}]]: [[${#temporals.format(ca.getAssignmentDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+							<span class="category-update-date" th:if="${ca.updateDateTimestamp > 0}">[[#{admin.user_permissions.category_updated}]]: [[${#temporals.format(ca.getUpdateDateTime(), 'dd-MM-yyyy HH:mm')}]]</span>
+							<span class="category-cancellation-date" th:if="${ca.getValidToTimestamp() != null}">[[#{admin.user_permissions.category_validto}]]: [[${#temporals.format(ca.getValidToDateTime(), 'dd-MM-yyyy')}]]</span>
+						</li>
+					</th:block>
+				</ul>
+			</div>
+		</div>
+		</th:block>
+	</div>
+</body>
+</html>
