@@ -287,7 +287,37 @@ public class DefaultPermissionRequestServiceTest {
 		assertEquals(expectedAuditLogDescription, auditLog.getDescription());
 		assertEquals(comment, auditLog.getComment());
 	}
-	
+
+	@Test
+	public void testCommentPermissionRequest_forInvalidId() {
+		int requestId = 21;
+		String comment = "TEST";
+		PermissionRequestEntity request = mock(PermissionRequestEntity.class);
+
+		given(permissionRequestDAO.findById(requestId)).willReturn(Optional.of(request));
+
+		PermissionRequestEntity result = sut.commentPermissionRequest(requestId, comment);
+		assertNotNull(result);
+		assertEquals(request, result);
+
+		verify(permissionRequestDAO, times(1)).findById(requestId);
+		verify(permissionRequestDAO, times(1)).save(request);
+		verify(request, times(1)).setAdminComment(comment);
+	}
+
+	@Test
+	public void testCommentPermissionRequest() {
+		int requestId = 42;
+		String comment = "TEST";
+		given(permissionRequestDAO.findById(requestId)).willReturn(Optional.empty());
+
+		PermissionRequestEntity result = sut.commentPermissionRequest(requestId, comment);
+		assertNull(result);
+
+		verify(permissionRequestDAO, times(1)).findById(requestId);
+		verify(permissionRequestDAO, never()).save(any());
+	}
+
 	@Test
 	public void testSendRejectRequestNotification_forExistingUser() {
 		UserEntity userEntity = mock(UserEntity.class);

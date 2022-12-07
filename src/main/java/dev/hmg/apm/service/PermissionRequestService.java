@@ -38,7 +38,9 @@ public interface PermissionRequestService {
 	
 	PermissionRequestEntity editPermissionRequest(PermissionRequestEntity request, String targetUserMail,
 												  String[] products, String[] categories, Map<String, String> allParams);
-	
+
+	PermissionRequestEntity commentPermissionRequest(int requestId, String comment);
+
 	PermissionRequestEntity rejectRequest(int requestId, OAuth2User user, String comment);
 	
 	void sendRejectRequestNotification(PermissionRequestEntity request);

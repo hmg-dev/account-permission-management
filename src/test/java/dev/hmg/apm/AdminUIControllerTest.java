@@ -163,7 +163,38 @@ public class AdminUIControllerTest extends AbstractControllerTest {
 		verify(permissionRequestService, times(1)).rejectRequest(requestId, user, reason);
 		verify(permissionRequestService, times(1)).sendRejectRequestNotification(request);
 	}
-	
+
+	@Test
+	public void testCommentRequest_forException() {
+		int requestId = 42;
+		String comment = "NARF";
+		String dummyErrorMessage = "TEST ERROR";
+		given(messageSource.getMessage(eq("admin.comment.processing_error"), any(), eq(dummyLocale))).willReturn(dummyErrorMessage);
+		doThrow(new IllegalStateException("TEST")).when(permissionRequestService).commentPermissionRequest(anyInt(), any());
+
+		String result = sut.commentRequest(requestId, comment, redirectAttributes, dummyLocale);
+		assertEquals("redirect:/admin", result);
+
+		verify(messageSource, times(1)).getMessage("admin.comment.processing_error", new Object[]{"TEST"}, dummyLocale);
+		verify(redirectAttributes, times(1)).addFlashAttribute("errorMessage", dummyErrorMessage);
+		verify(permissionRequestService, times(1)).commentPermissionRequest(anyInt(), any());
+	}
+
+	@Test
+	public void testCommentRequest() {
+		int requestId = 42;
+		String comment = "NARF";
+		String dummySuccessMessage = "TEST ERROR";
+		given(messageSource.getMessage(eq("admin.comment.success"), any(), eq(dummyLocale))).willReturn(dummySuccessMessage);
+
+		String result = sut.commentRequest(requestId, comment, redirectAttributes, dummyLocale);
+		assertEquals("redirect:/admin", result);
+
+		verify(messageSource, times(1)).getMessage("admin.comment.success", null, dummyLocale);
+		verify(redirectAttributes, times(1)).addFlashAttribute("message", dummySuccessMessage);
+		verify(permissionRequestService, times(1)).commentPermissionRequest(anyInt(), any());
+	}
+
 	@Test
 	public void testAuditLog() {
 		AuditLogEntity al1 = mock(AuditLogEntity.class);

@@ -65,6 +65,9 @@
 		Es gibt noch keine Automatisierung, also sollte das nicht im Nachhinein gemacht werden.
 	]]></entry>
 	<entry key="admin.start.open_requests.category_comment">Kommentar</entry>
+	<entry key="admin.start.open_request.actions.edit">Bearbeiten</entry>
+	<entry key="admin.start.open_request.actions.comment">Kommentieren</entry>
+	<entry key="admin.start.open_request.actions.comment.dialog_title">Hinterlasse einen Kommentar für deine Co-Admins</entry>
 
 	<entry key="admin.request.edit.headline">Zugriffsanfrage bearbeiten für {0}</entry>
 	<entry key="admin.request.edit.choose.headline">Was ist der Ziel-Benutzer für die angefragten Rechte?</entry>
@@ -113,6 +116,9 @@
 
 	<entry key="admin.accept.processing_error">Bewilligen der Anfrage ist fehlgeschlagen! Fehler war: {0}</entry>
 	<entry key="admin.accept.success">Zugriffsanfrage wurde erfolgreich bewilligt!</entry>
+
+	<entry key="admin.comment.processing_error">Kommentieren der Anfrage ist fehlgeschlagen! Fehler war: {0}</entry>
+	<entry key="admin.comment.success">Zugriffsanfrage wurde erfolgreich kommentiert!</entry>
 
 	<entry key="notification.request.created.subject">Neue Anfrage von Zugriffsrechten für {0}</entry>
 	<entry key="notification.request.created.text">

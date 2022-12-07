@@ -127,7 +127,25 @@ public class AdminUIController extends AbstractRequestController {
 				messageSource.getMessage("admin.accept.success", null, locale));
 		return "redirect:/admin";
 	}
-	
+
+	@PostMapping("/commentRequest")
+	@PreAuthorize("hasRole('DevOps')")
+	public String commentRequest(@RequestParam("requestId") final int requestId, @RequestParam("comment") final String comment,
+								 final RedirectAttributes redirectAttributes, final Locale locale) {
+		try {
+			permissionRequestService.commentPermissionRequest(requestId, comment);
+		} catch (RuntimeException e) {
+			log.error("Unable to comment request!", e);
+			redirectAttributes.addFlashAttribute("errorMessage",
+					messageSource.getMessage("admin.comment.processing_error", new Object[]{e.getMessage()}, locale));
+			return "redirect:/admin";
+		}
+
+		redirectAttributes.addFlashAttribute("message",
+				messageSource.getMessage("admin.comment.success", null, locale));
+		return "redirect:/admin";
+	}
+
 	@PostMapping("/revokePermissions")
 	@PreAuthorize("hasRole('DevOps')")
 	public String revokePermissions(@RequestParam("userMail") final String targetUser, final RedirectAttributes redirectAttributes, final Locale locale) {

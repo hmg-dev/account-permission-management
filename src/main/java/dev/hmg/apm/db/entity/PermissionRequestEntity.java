@@ -48,7 +48,11 @@ public class PermissionRequestEntity {
 	@Column(name = "resolution_comment", columnDefinition = "text")
 	@Type(type = "text")
 	private String comment;
-	
+
+	@Column(name = "admin_comment", columnDefinition = "text")
+	@Type(type = "text")
+	private String adminComment;
+
 	@Column(name = "validto_date")
 	private Long validToTimestamp;
 	
@@ -91,7 +95,11 @@ public class PermissionRequestEntity {
 	public String getComment() {
 		return comment;
 	}
-	
+
+	public String getAdminComment() {
+		return adminComment;
+	}
+
 	public List<ProductEntity> getProducts() {
 		return products;
 	}
@@ -123,7 +131,11 @@ public class PermissionRequestEntity {
 	public void setComment(final String comment) {
 		this.comment = comment;
 	}
-	
+
+	public void setAdminComment(String adminComment) {
+		this.adminComment = adminComment;
+	}
+
 	public void setRequestSubcategories(final List<PermissionRequestSubcategoryEntity> requestSubcategories) {
 		this.requestSubcategories = requestSubcategories;
 	}

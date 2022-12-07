@@ -32,6 +32,7 @@ create table permission_requests (
     request_date bigint not null,
     resolution varchar(256),
     resolution_comment text,
+    admin_comment text,
     validto_date bigint,
     primary key (id)
 );

@@ -37,6 +37,7 @@
 				<p class="permission-request-from">[[#{admin.start.open_requests.base_data.for}]] <span class="open-permission-request-basedata-details" th:text="${request.requestFor}"></span></p>
 				<p>[[#{admin.start.open_requests.base_data.date}]] <span class="open-permission-request-basedata-details" th:text="${#temporals.format(request.getRequestDateTime(), 'dd-MM-yyyy HH:mm')}"></span></p>
 				<p class="permission-request-validto" th:if="${request.getValidToTimestamp() != null}">[[#{admin.start.open_requests.base_data.validTo}]] <span class="open-permission-request-basedata-details" th:text="${#temporals.format(request.getValidToDateTime(), 'dd-MM-yyyy')}"></span></p>
+				<p class="permission-request-admin-comment" th:if="${not #strings.isEmpty(request.getAdminComment())}" th:utext="${#strings.replace(request.getAdminComment(),'&#10;','&lt;br/&gt;')}"></p>
 			</div>
 			<div class="open-permission-request-details">
 				<div class="open-permission-request-details-product" th:each="product : ${request.products}">
@@ -79,6 +80,14 @@
 						<p th:text="#{request.edit.button}"></p>
 					</div>
 				</a>
+				<form action="#" th:action="@{/commentRequest}" method="post" th:id="${#strings.concat('comment-form-', request.id)}">
+					<div class="comment-request" th:title="#{admin.start.open_request.actions.comment.dialog_title}" th:id="${#strings.concat('com-dialog-', request.id)}">
+						<textarea type="text" style="width: 99%; height: 200px">[[${request.getAdminComment()}]]</textarea>
+					</div>
+					<input type="hidden" name="comment" th:id="${#strings.concat('com-comment-', request.id)}" />
+					<input type="hidden" name="requestId" th:value="${request.id}" />
+					<button onclick="event.preventDefault();" class="comment-request-button" name="comment-request"><img src="images/edit.svg" /> [[#{admin.start.open_request.actions.comment}]]</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -122,6 +131,25 @@
                 }
             }
         });
+		$( ".comment-request" ).dialog({
+			autoOpen: false,
+			resizable: false,
+			height: "auto",
+			width: dialogWidth,
+			minWidth: 400,
+			modal: true,
+			buttons: {
+				"Comment": function() {
+					let requestId = $(this).attr("id").replace("com-dialog-", "");
+					let comment = $(this).find("textarea").first().val();
+					$("#com-comment-"+requestId).val(comment);
+					$("#comment-form-"+requestId).submit();
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
 
 		$(".reject-request-button").click(function(){
 			let rid = $(this).parent().find("[name='requestId']").first().val();
@@ -131,6 +159,10 @@
             let rid = $(this).parent().find("[name='requestId']").first().val();
             $("#ac-dialog-"+rid).dialog("open");
         });
+		$(".comment-request-button").click(function(){
+			let rid = $(this).parent().find("[name='requestId']").first().val();
+			$("#com-dialog-"+rid).dialog("open");
+		});
 	} );
 </script>
 </html>

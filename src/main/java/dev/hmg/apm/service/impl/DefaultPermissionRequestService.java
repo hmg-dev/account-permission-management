@@ -138,7 +138,21 @@ public class DefaultPermissionRequestService implements PermissionRequestService
 		
 		return request;
 	}
-	
+
+	@Override
+	public PermissionRequestEntity commentPermissionRequest(final int requestId, final String comment) {
+		Optional<PermissionRequestEntity> requestOpt = permissionRequestDAO.findById(requestId);
+		if(requestOpt.isEmpty()) {
+			return null;
+		}
+		PermissionRequestEntity request = requestOpt.get();
+		request.setAdminComment(comment);
+
+		permissionRequestDAO.save(request);
+
+		return request;
+	}
+
 	@Override
 	@Transactional
 	public PermissionRequestEntity rejectRequest(final int requestId, final OAuth2User user, final String comment) {

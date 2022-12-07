@@ -7,4 +7,11 @@
 		<filePath regex="true">.*spring-web.*\.jar</filePath>
 		<cve>CVE-2016-1000027</cve>
 	</suppress>
+	<suppress>
+		<notes><![CDATA[
+		false-positive: https://github.com/spring-projects/spring-boot/issues/33457
+		]]></notes>
+		<filePath regex="true">.*snakeyaml.*\.jar</filePath>
+		<cve>CVE-2022-1471</cve>
+	</suppress>
 </suppressions>

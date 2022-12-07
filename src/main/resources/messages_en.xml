@@ -65,6 +65,8 @@
 		There is no automation yet, so you shouldn't configure it after the fact.
 	]]></entry>
 	<entry key="admin.start.open_requests.category_comment">Comment</entry>
+	<entry key="admin.start.open_request.actions.comment">leave comment</entry>
+	<entry key="admin.start.open_request.actions.comment.dialog_title">leave a comment for your fellow admins</entry>
 
 	<entry key="admin.request.edit.headline">Edit Permissions Request for {0}</entry>
 	<entry key="admin.request.edit.choose.headline">Whats the target-user for the requested permissions?</entry>
@@ -113,6 +115,9 @@
 
 	<entry key="admin.accept.processing_error">Unable to accept request! Error was: {0}</entry>
 	<entry key="admin.accept.success">Successfully accepted permissions-request!</entry>
+
+	<entry key="admin.comment.processing_error">Unable to comment request! Error was: {0}</entry>
+	<entry key="admin.comment.success">Successfully commented permissions-request!</entry>
 
 	<entry key="notification.request.created.subject">Received new Permission-Request for {0}</entry>
 	<entry key="notification.request.created.text">
