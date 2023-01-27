@@ -45,6 +45,7 @@
 	<entry key="menu.entry.mypermissions">My Permissions</entry>
 	<entry key="menu.entry.user_permissions">User Permissions</entry>
 	<entry key="menu.entry.expiring_permissions">Expiring Permissions</entry>
+	<entry key="menu.entry.expired_permissions">Expired Permissions</entry>
 	
 	<entry key="admin.start.headline">Manage Account Permissions</entry>
 	<entry key="admin.start.open_requests.headline">Open permission-requests</entry>
@@ -103,6 +104,12 @@
 	]]></entry>
 	<entry key="admin.user_permissions.revoke.error">Failed to revoke user-permissions for {0}. Check log-file for details!</entry>
 	<entry key="admin.user_permissions.revoke.success">Successfully revoked user-permissions for {0}.</entry>
+
+	<entry key="admin.expired_permissions.headline">Permissions expired in the last {0} days</entry>
+	<entry key="admin.expired_permissions.noentries">No expired permissions in the specified period</entry>
+	<entry key="admin.expired_permissions.usermail">User eMail</entry>
+	<entry key="admin.expired_permissions.product">Product</entry>
+	<entry key="admin.expired_permissions.validto">was valid to</entry>
 	
 	<entry key="admin.expiring_permissions.headline">Permissions expiring in the next {0} days</entry>
 	<entry key="admin.expiring_permissions.noentries">No expiring permissions in the specified period</entry>

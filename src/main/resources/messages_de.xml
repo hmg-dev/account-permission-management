@@ -45,6 +45,7 @@
 	<entry key="menu.entry.mypermissions">Meine Berechtigungen</entry>
 	<entry key="menu.entry.user_permissions">Userrechte</entry>
 	<entry key="menu.entry.expiring_permissions">Auslaufende Rechte</entry>
+	<entry key="menu.entry.expired_permissions">Abgelaufene Rechte</entry>
 	
 	<entry key="admin.start.headline">Zugriffsrechte verwalten</entry>
 	<entry key="admin.start.open_requests.headline">Offene Rechteanfragen</entry>
@@ -104,6 +105,12 @@
 	]]></entry>
 	<entry key="admin.user_permissions.revoke.error">Die Zugriffsrechte für {0} konnten nicht zurück gerufen werden. Prüfe das Logfile für Details!</entry>
 	<entry key="admin.user_permissions.revoke.success">Die Zugriffsrechte für {0} wurden erfolgreich widerrufen.</entry>
+
+	<entry key="admin.expired_permissions.headline">Berechtigungen die in den letzten {0} Tagen abgelaufen sind</entry>
+	<entry key="admin.expired_permissions.noentries">Keine abgelaufenen Berechtigungen im angegebenen Zeitraum</entry>
+	<entry key="admin.expired_permissions.usermail">User eMail</entry>
+	<entry key="admin.expired_permissions.product">Produkt</entry>
+	<entry key="admin.expired_permissions.validto">war Gültig bis</entry>
 	
 	<entry key="admin.expiring_permissions.headline">Berechtigungen die in den nächsten {0} Tagen auslaufen</entry>
 	<entry key="admin.expiring_permissions.noentries">Keine auslaufenden Berechtigungen im angegebenen Zeitraum</entry>

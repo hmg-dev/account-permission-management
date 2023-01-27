@@ -42,6 +42,7 @@ public class AppConfig {
     private String notificationSender;
     private boolean notificationsEnabled;
     
+    private int showRecentlyExpiredPermissionsInLastDays;
     private int showSoonExpiringPermissionsInNextDays;
     private int entriesPerPage;
     private int pageNumbersInPaginationBar;
@@ -108,6 +109,14 @@ public class AppConfig {
     
     public void setNotificationsEnabled(final boolean notificationsEnabled) {
         this.notificationsEnabled = notificationsEnabled;
+    }
+    
+    public int getShowRecentlyExpiredPermissionsInLastDays() {
+        return showRecentlyExpiredPermissionsInLastDays;
+    }
+    
+    public void setShowRecentlyExpiredPermissionsInLastDays(final int showRecentlyExpiredPermissionsInLastDays) {
+        this.showRecentlyExpiredPermissionsInLastDays = showRecentlyExpiredPermissionsInLastDays;
     }
     
     public int getShowSoonExpiringPermissionsInNextDays() {

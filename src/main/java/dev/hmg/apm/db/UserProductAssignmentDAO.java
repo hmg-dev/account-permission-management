@@ -42,6 +42,12 @@ public interface UserProductAssignmentDAO extends CrudRepository<UserProductAssi
 			"order by a.validToTimestamp")
 	List<UserProductAssignment> findAssignmentsExpiringInDays(@Param("days") final int days);
 	
+	@Query("select a from UserProductAssignment a " +
+			"where a.validToTimestamp <= (UNIX_TIMESTAMP() * 1000) " +
+			"and a.validToTimestamp >= (UNIX_TIMESTAMP() - (:days * 24*60*60))*1000 " +
+			"order by a.validToTimestamp")
+	List<UserProductAssignment> findAssignmentsExpiredForDays(@Param("days") final int days);
+	
 	@Query("select a from UserProductAssignment a where a.user.id = :userId")
 	List<UserProductAssignment> findAssignmentsForUserId(@Param("userId") final int userId);
 }

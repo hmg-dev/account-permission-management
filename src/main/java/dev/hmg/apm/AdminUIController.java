@@ -200,6 +200,18 @@ public class AdminUIController extends AbstractRequestController {
 		return "soonExpiringPermissions";
 	}
 	
+	@GetMapping("/recentlyExpiredPermissions")
+	@PreAuthorize("hasRole('DevOps')")
+	public String recentlyExpiredPermissions(final Model model) {
+		int days = appConfig.getShowRecentlyExpiredPermissionsInLastDays();
+		List<UserProductAssignment> assignments = userProductAssignmentDAO.findAssignmentsExpiredForDays(days);
+		
+		model.addAttribute("assignments", assignments);
+		model.addAttribute("days", days);
+		
+		return "recentlyExpiredPermissions";
+	}
+	
 	@GetMapping("/adminEdit")
 	@PreAuthorize("hasRole('DevOps')")
 	public String editForm(@RequestParam final int requestId, final Model model, final OAuth2AuthenticationToken auth, final Locale locale,

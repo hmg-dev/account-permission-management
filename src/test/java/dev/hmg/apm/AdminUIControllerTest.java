@@ -310,6 +310,24 @@ public class AdminUIControllerTest extends AbstractControllerTest {
 	}
 	
 	@Test
+	public void testRecentlyExpiredPermissions() {
+		UserProductAssignment ua1 = mock(UserProductAssignment.class);
+		List<UserProductAssignment> assignments = Collections.singletonList(ua1);
+		int showDays = 30;
+		
+		given(appConfig.getShowRecentlyExpiredPermissionsInLastDays()).willReturn(showDays);
+		given(userProductAssignmentDAO.findAssignmentsExpiredForDays(anyInt())).willReturn(assignments);
+		
+		String result = sut.recentlyExpiredPermissions(model);
+		assertEquals("recentlyExpiredPermissions", result);
+		
+		verify(appConfig, times(1)).getShowRecentlyExpiredPermissionsInLastDays();
+		verify(userProductAssignmentDAO, times(1)).findAssignmentsExpiredForDays(showDays);
+		verify(model, times(1)).addAttribute("assignments", assignments);
+		verify(model, times(1)).addAttribute("days", showDays);
+	}
+	
+	@Test
 	public void testRevokePermissions_forError() {
 		String userMail = "test@narf.zort";
 		String dummyMessage = "TEST";
